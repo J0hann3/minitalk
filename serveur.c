@@ -6,31 +6,55 @@
 /*   By: jvigny <jvigny@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 12:58:55 by jvigny            #+#    #+#             */
-/*   Updated: 2022/12/05 13:24:02 by jvigny           ###   ########.fr       */
+/*   Updated: 2022/12/06 02:52:03 by jvigny           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <signal.h>
-#include <sys/types.h>
-#include <unistd.h>
+#include "minitalk.h"
 
-void	trait(int sign)
+void	trait(int sign, siginfo_t *info, void *ucontext)
 {
-	write(1, "Hello", 5);
+	static char			res[1024];
+	static int			i = 0;
+	static unsigned int	tmp = 255;
+
+	tmp = tmp << 1;
+	if (sign == SIGUSR2)
+		tmp = tmp + 1;
+	if ((tmp & 0xFF00) >= 32768)
+	{
+		res[i] = (char)(tmp & 0x00FF);
+		if (res[i] == 0)
+		{
+			write(1, res, i);
+			i = -1;
+			kill(info->si_pid, SIGUSR2);
+		}
+		if (i == 1023)
+		{
+			write(1, res, i + 1);
+			i = -1;
+		}
+		i++;
+		tmp = 255;
+	}
+	kill(info->si_pid, SIGUSR1);
 }
 
-int	main()
+int	main(void)
 {
-	int	pid;
+	int					pid;
+	struct sigaction	action;
 
+	action.sa_sigaction = &trait;
+	sigemptyset(&action.sa_mask);
+	action.sa_flags = SA_SIGINFO;
 	pid = getpid();
 	printf("%d\n", pid);
-	signal(SIGUSR1, trait);
-	// sigaction(SIGUSR1, )
+	sigaction(SIGUSR1, &action, NULL);
+	sigaction(SIGUSR2, &action, NULL);
 	while (1)
 	{
-		pause();
 	}
 	return (1);
 }
