@@ -6,7 +6,7 @@
 /*   By: jvigny <jvigny@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 12:58:55 by jvigny            #+#    #+#             */
-/*   Updated: 2022/12/06 02:52:03 by jvigny           ###   ########.fr       */
+/*   Updated: 2022/12/06 04:40:04 by jvigny           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	trait(int sign, siginfo_t *info, void *ucontext)
 	static int			i = 0;
 	static unsigned int	tmp = 255;
 
+	(void)ucontext;
 	tmp = tmp << 1;
-	if (sign == SIGUSR2)
-		tmp = tmp + 1;
+	tmp = tmp + (sign == SIGUSR2);
 	if ((tmp & 0xFF00) >= 32768)
 	{
 		res[i] = (char)(tmp & 0x00FF);
