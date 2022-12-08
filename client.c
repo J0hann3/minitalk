@@ -6,7 +6,7 @@
 /*   By: jvigny <jvigny@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 12:59:04 by jvigny            #+#    #+#             */
-/*   Updated: 2022/12/06 05:02:58 by jvigny           ###   ########.fr       */
+/*   Updated: 2022/12/08 16:48:03 by jvigny           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(int argc, char **argv)
 {
 	int					pid;
 	struct sigaction	act;
+	size_t				size;
 	size_t				i;
 
 	if (argc != 3)
@@ -66,7 +67,8 @@ int	main(int argc, char **argv)
 	pid = atoi(argv[1]);
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
-	while (i <= ft_strlen(argv[2]))
+	size = ft_strlen(argv[2]);
+	while (i <= size)
 	{
 		extract_binaire(argv[2][i], pid);
 		i++;
