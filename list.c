@@ -6,7 +6,7 @@
 /*   By: jvigny <jvigny@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:42:51 by jvigny            #+#    #+#             */
-/*   Updated: 2022/12/08 16:38:50 by jvigny           ###   ########.fr       */
+/*   Updated: 2022/12/12 11:19:36 by jvigny           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,18 @@ void	delete_print(t_list **lst)
 
 	begin = *lst;
 	if (lst == NULL || *lst == NULL)
-	{
-		// write(1, "FUCK", 4);
 		return ;
-	}
-	// write(1, "COUCOU", 6);
 	lst_last = NULL;
 	while (begin->next != NULL)
 	{
 		lst_last = begin;
 		begin = begin->next;
-		// write(1, "OKAY", 4);
 	}
 	write(1, begin->buffer, begin->i);
-	// write(1, "FINI", 4);
 	if (lst_last != NULL)
-	{
-		// write(1, "HEY", 3);
 		lst_last->next = NULL;
-	}
 	else
-	{
-		// write(1, "HELLO", 5);
 		*lst = NULL;
-	}
 	free(begin);
 }
 

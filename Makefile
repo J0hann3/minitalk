@@ -6,14 +6,14 @@
 #    By: jvigny <jvigny@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 04:06:44 by jvigny            #+#    #+#              #
-#    Updated: 2022/12/08 14:48:52 by jvigny           ###   ########.fr        #
+#    Updated: 2022/12/15 12:40:52 by jvigny           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC_CLIENT = client.c ft_strlen.c
+SRC_CLIENT = client.c utils.c
 OBJ_CLIENT = ${SRC_CLIENT:.c=.o}
 
-SRC_SERVER = serveur.c list.c
+SRC_SERVER = serveur.c list.c utils.c
 OBJ_SERVER = ${SRC_SERVER:.c=.o}
 
 NAME_CLIENT = client

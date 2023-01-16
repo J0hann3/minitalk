@@ -6,7 +6,7 @@
 /*   By: jvigny <jvigny@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 12:59:04 by jvigny            #+#    #+#             */
-/*   Updated: 2022/12/08 16:48:03 by jvigny           ###   ########.fr       */
+/*   Updated: 2022/12/12 12:26:19 by jvigny           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ void	receive(int sign, siginfo_t *info, void *ucontext)
 	if (sign == SIGUSR1)
 		g_boolean = 1;
 	if (sign == SIGUSR2)
-	{
-		write(1, "BRAVO MESSAGE BIEN RECU !!!\n", 28);
 		exit(EXIT_SUCCESS);
-	}
 }
 
 void	extract_binaire(char c, pid_t pid)
@@ -59,12 +56,14 @@ int	main(int argc, char **argv)
 	size_t				i;
 
 	if (argc != 3)
-		return (printf("Nombre d'arguments incorrect\n"), -1);
+		return (write(1, "Nombre d'arguments incorrect\n", 29), -1);
 	act.sa_sigaction = &receive;
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;
 	i = 0;
-	pid = atoi(argv[1]);
+	pid = ft_atoi(argv[1]);
+	if (pid < 0)
+		return (write(1, "PID incorrect\n", 14), -1);
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
 	size = ft_strlen(argv[2]);

@@ -6,7 +6,7 @@
 /*   By: jvigny <jvigny@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 00:42:10 by jvigny            #+#    #+#             */
-/*   Updated: 2022/12/08 15:04:58 by jvigny           ###   ########.fr       */
+/*   Updated: 2022/12/12 11:38:53 by jvigny           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_list{
 }	t_list;
 
 size_t	ft_strlen(const char *s);
+int		ft_atoi(char *str);
+void	ft_putnbr_fd(int n, int fd);
 t_list	*new(void);
 void	add_front(t_list **begin, t_list *new);
 void	clear_and_print(t_list **lst);
