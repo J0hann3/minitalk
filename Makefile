@@ -6,21 +6,21 @@
 #    By: jvigny <jvigny@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 04:06:44 by jvigny            #+#    #+#              #
-#    Updated: 2022/12/08 14:48:52 by jvigny           ###   ########.fr        #
+#    Updated: 2023/01/17 11:59:39 by jvigny           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC_CLIENT = client.c ft_strlen.c
+SRC_CLIENT = client.c utils.c
 OBJ_CLIENT = ${SRC_CLIENT:.c=.o}
 
-SRC_SERVER = serveur.c list.c
+SRC_SERVER = serveur.c list.c utils.c delete_list.c
 OBJ_SERVER = ${SRC_SERVER:.c=.o}
 
 NAME_CLIENT = client
 NAME_SERVER = server
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I.
+CFLAGS = -Wall -Werror -Wextra -I. -g
 
 all:	${NAME_CLIENT} ${NAME_SERVER}
 
@@ -38,6 +38,6 @@ fclean:	clean
 
 re:	fclean all
 
-.PHONY: re fclean clean
+.PHONY: re fclean clean all
 
 
