@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvigny <jvigny@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 00:40:21 by jvigny            #+#    #+#             */
-/*   Updated: 2022/12/12 12:22:30 by jvigny           ###   ########.fr       */
+/*   Updated: 2023/12/20 18:21:46 by jvigny           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
+int	ft_whitespace(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\r' || c == '\f'
+		|| c == '\n' || c == '\v')
+		return (1);
+	return (0);
+}
+
 int	ft_atoi(char *str)
 {
 	int		nb;
@@ -33,8 +41,7 @@ int	ft_atoi(char *str)
 	nb = 0;
 	sign = 1;
 	j = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\r' || str[i] == '\f'
-		|| str[i] == '\n' || str[i] == '\v')
+	while (ft_whitespace(str[i]) == 1)
 		i++;
 	while (str[i] == '+' || str[i] == '-')
 	{
@@ -44,11 +51,10 @@ int	ft_atoi(char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		nb = nb * 10 + str[i] - '0';
-		i++;
+		nb = nb * 10 + str[i++] - '0';
 		j++;
 	}
-	if (j == 0)
+	if (j == 0 || str[i] != '\0')
 		return (-1);
 	return (nb * sign);
 }

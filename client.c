@@ -6,7 +6,7 @@
 /*   By: jvigny <jvigny@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 12:59:04 by jvigny            #+#    #+#             */
-/*   Updated: 2022/12/12 12:26:19 by jvigny           ###   ########.fr       */
+/*   Updated: 2023/12/20 18:18:40 by jvigny           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ void	receive(int sign, siginfo_t *info, void *ucontext)
 		exit(EXIT_SUCCESS);
 }
 
+void	error(void)
+{
+	write(1, "Error: Signal not send\n", 23);
+	exit(EXIT_FAILURE);
+}
+
 void	extract_binaire(char c, pid_t pid)
 {
 	unsigned char	binaire;
@@ -35,9 +41,11 @@ void	extract_binaire(char c, pid_t pid)
 	{
 		g_boolean = 0;
 		if ((c & binaire) == 0)
-			kill(pid, SIGUSR1);
+			if (kill(pid, SIGUSR1) == -1)
+				error();
 		if ((c & binaire) != 0)
-			kill(pid, SIGUSR2);
+			if (kill(pid, SIGUSR2) == -1)
+				error();
 		j++;
 		binaire = binaire >> 1;
 		while (1)
